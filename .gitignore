@@ -1,0 +1,10 @@
+build
+*.iml
+.gradle
+.idea
+gradlew.bat
+gradle
+gradlew
+.DS_Store
+*.cache
+*.lock
