@@ -1,40 +1,63 @@
 package com.datajpa.example;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-
-import javax.sql.DataSource;
-import java.beans.PropertyVetoException;
 
 @Configuration
-@PropertySource("classpath:db.properties")
+@ConfigurationProperties(prefix = "spring.db")
 public class DataSourceConfig {
-    @Value("${spring.db.driverClassName}")
-    private String driverClass;
-    @Value("${spring.db.url}")
+    private String driverClassName;
     private String url;
-    @Value("${spring.db.username}")
-    private String user;
-    @Value("${spring.db.password}")
+    private String username;
     private String password;
-    @Value("${spring.datasource.initialPoolSize:30}")
-    private int initialPoolSize;
-    @Value("${spring.datasource.maxActive:100}")
-    private int maxActive;
+    private int initialPoolSize = 30;
+    private int maxActive = 100;
 
+    public String getDriverClassName() {
+        return driverClassName;
+    }
 
-    @Bean
-    public DataSource dataSource() throws PropertyVetoException {
-        DruidDataSource dataSource = new DruidDataSource();
-        dataSource.setUrl(url);
-        dataSource.setUsername(user);
-        dataSource.setPassword(password);
-        dataSource.setDriverClassName(driverClass);
-        dataSource.setInitialSize(initialPoolSize);
-        dataSource.setMaxActive(maxActive);
-        return dataSource;
+    public void setDriverClassName(String driverClassName) {
+        this.driverClassName = driverClassName;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getInitialPoolSize() {
+        return initialPoolSize;
+    }
+
+    public void setInitialPoolSize(int initialPoolSize) {
+        this.initialPoolSize = initialPoolSize;
+    }
+
+    public int getMaxActive() {
+        return maxActive;
+    }
+
+    public void setMaxActive(int maxActive) {
+        this.maxActive = maxActive;
     }
 }

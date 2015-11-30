@@ -1,16 +1,14 @@
 package com.datajpa.example;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
+import java.beans.PropertyVetoException;
 
 //@EnableConfigurationProperties(DataSourceConfig.class)
 // 该注解是把application.properties中的配置映射到DataSourceConfig类中,
@@ -19,20 +17,20 @@ import javax.sql.DataSource;
 
 @Configuration
 @EntityScan("com.datajpa.example.entity")
-@EnableJpaRepositories(entityManagerFactoryRef = "entityManagerFactory", transactionManagerRef = "transactionManager")
+@EnableJpaRepositories("com.datajpa.example.repository")
 public class PersistenceConfig {
     @Autowired
-    private DataSource dataSource;
+    private DataSourceConfig config;
 
-    @Bean(name = "entityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder) {
-        return builder.dataSource(dataSource)
-                .packages("com.datajpa.example.repository")
-                .build();
-    }
-
-    @Bean(name = "transactionManager")
-    PlatformTransactionManager transactionManager(EntityManagerFactoryBuilder builder) {
-        return new JpaTransactionManager(entityManagerFactory(builder).getObject());
+    @Bean
+    public DataSource dataSource() throws PropertyVetoException {
+        DruidDataSource dataSource = new DruidDataSource();
+        dataSource.setUrl(config.getUrl());
+        dataSource.setUsername(config.getUsername());
+        dataSource.setPassword(config.getPassword());
+        dataSource.setDriverClassName(config.getDriverClassName());
+        dataSource.setInitialSize(config.getInitialPoolSize());
+        dataSource.setMaxActive(config.getMaxActive());
+        return dataSource;
     }
 }
