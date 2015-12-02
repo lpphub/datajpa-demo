@@ -41,5 +41,10 @@ public class UserServiceImplTest {
         System.out.println(users2.size());
         List<User> users3 = userService.findAllByCustom();
         System.out.println(users3.size());
+//        User user = new User();
+//        user.setName("小张");
+//        user.setAge(20);
+//        user.setAddress("上海");
+//        userService.save(user);
     }
 }
