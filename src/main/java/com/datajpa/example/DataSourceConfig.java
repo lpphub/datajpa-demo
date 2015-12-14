@@ -1,9 +1,8 @@
 package com.datajpa.example;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
+// DataSourceConfig中必须加setter, getter方法，属性名和key对应
 @ConfigurationProperties(prefix = "spring.db")
 public class DataSourceConfig {
     private String driverClassName;
