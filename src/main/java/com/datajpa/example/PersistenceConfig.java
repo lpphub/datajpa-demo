@@ -30,4 +30,16 @@ public class PersistenceConfig {
         dataSource.setMaxActive(config.getMaxActive());
         return dataSource;
     }
+
+//    @Bean(name = "entityManagerFactory")
+//    public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder) {
+//        return builder.dataSource(dataSource)
+//                .packages("com.datajpa.example.repository")
+//                .build();
+//    }
+//
+//    @Bean(name = "transactionManager")
+//    PlatformTransactionManager transactionManager(EntityManagerFactoryBuilder builder) {
+//        return new JpaTransactionManager(entityManagerFactory(builder).getObject());
+//    }
 }
